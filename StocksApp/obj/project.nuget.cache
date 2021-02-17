@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "KAVPX8R1OfzNauYgOSrFbCcPtrWsG++Fbv19a6G3z/lgUrrfABwDXL0+WZfGFaGEaGRl7tOQm+jKN8n5MH5QqQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\dashwort\\OneDrive - Agilent Technologies\\CodingProjects\\C#\\StocksApp\\StocksApp\\StocksApp\\StocksApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dashwort\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
