@@ -1,18 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Stocks.Models
 {
     public class Quote
     {
-        public double c { get; set; }
-        public double h { get; set; }
-        public double l { get; set; }
-        public double o { get; set; }
-        public double pc { get; set; }
-        public int t { get; set; }
+        [JsonPropertyName("Current Price")]
+        public double Close { get; set; }
+
+        [JsonPropertyName("High Price")]
+        public double High { get; set; }
+
+        [JsonPropertyName("Low Price")]
+        public double Low { get; set; }
+
+        [JsonPropertyName("Open price of day")]
+        public double Open { get; set; }
+
+        [JsonPropertyName("Previous Close")]
+        public double Pc { get; set; }
+
+        [JsonPropertyName("Unix Timemilliseconds")]
+        public int UnixTime { get; set; }
+
         public long Latency { get; set; }
+
         public string Symbol { get; set; }
 
         public DateTime Time
@@ -20,7 +34,7 @@ namespace Stocks.Models
             get
             {
                 System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-                return dtDateTime.AddSeconds(this.t).ToLocalTime();
+                return dtDateTime.AddSeconds(this.UnixTime).ToLocalTime();
             }
         }
 

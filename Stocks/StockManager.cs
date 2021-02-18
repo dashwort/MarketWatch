@@ -18,6 +18,8 @@ namespace Stocks
 
             this.quoteClient = new QuoteClient(Key, client);
             this.companyClient = new CompanyClient(Key, client);
+            this.searchResultClient = new SearchResultClient(Key, client);
+
             this.client.DefaultRequestHeaders.Add("X-Finnhub-Token", Key);
 
             // request timer 
@@ -29,6 +31,7 @@ namespace Stocks
         // properties
         public QuoteClient quoteClient { get; set; }
         public CompanyClient companyClient { get; set; }
+        public SearchResultClient searchResultClient { get; set; }
 
         public HttpClient client = new HttpClient();
 
@@ -40,7 +43,7 @@ namespace Stocks
 
 
         // fields
-        readonly TimerPlus _requestTimer;
+        public readonly TimerPlus _requestTimer;
         static int _requestCount;
 
         async void TimerElapsed(object sender, ElapsedEventArgs e)
@@ -80,6 +83,7 @@ namespace Stocks
 
         void Reset()
         {
+            Console.WriteLine($"Max requests in time period {_requestCount}");
             _requestCount = 0;
         }
 

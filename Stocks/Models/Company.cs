@@ -1,22 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Stocks.Models
 {
     public class Company
     {
-        public string country { get; set; }
-        public string currency { get; set; }
-        public string exchange { get; set; }
-        public string finnhubIndustry { get; set; }
-        public string ipo { get; set; }
-        public string logo { get; set; }
-        public double marketCapitalization { get; set; }
-        public string name { get; set; }
-        public string phone { get; set; }
-        public double shareOutstanding { get; set; }
-        public string ticker { get; set; }
-        public string weburl { get; set; }
+        [JsonPropertyName("country")]
+        public string Country { get; set; }
+
+        [JsonPropertyName("currency")]
+        public string Currency { get; set; }
+
+        [JsonPropertyName("exchange")]
+        public string Exchange { get; set; }
+
+        [JsonPropertyName("finnhubIndustry")]
+        public string FinnhubIndustry { get; set; }
+
+        [JsonPropertyName("ipo")]
+        public string Ipo { get; set; }
+
+        [JsonPropertyName("logo")]
+        public string Logo { get; set; }
+
+        [JsonPropertyName("marketCapitalization")]
+        public int MarketCapitalization { get; set; }
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("phone")]
+        public string Phone { get; set; }
+
+        [JsonPropertyName("shareOutstanding")]
+        public double ShareOutstanding { get; set; }
+
+        [JsonPropertyName("ticker")]
+        public string Ticker { get; set; }
+
+        [JsonPropertyName("weburl")]
+        public string Weburl { get; set; }
     }
+
 }
