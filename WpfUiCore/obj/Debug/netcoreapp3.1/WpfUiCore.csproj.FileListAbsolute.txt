@@ -26,3 +26,8 @@ C:\Users\dashwort\OneDrive - Agilent Technologies\CodingProjects\C#\StocksApp\St
 C:\Users\dashwort\OneDrive - Agilent Technologies\CodingProjects\C#\StocksApp\StocksApp\WpfUiCore\obj\Debug\netcoreapp3.1\WpfUiCore.dll
 C:\Users\dashwort\OneDrive - Agilent Technologies\CodingProjects\C#\StocksApp\StocksApp\WpfUiCore\obj\Debug\netcoreapp3.1\WpfUiCore.pdb
 C:\Users\dashwort\OneDrive - Agilent Technologies\CodingProjects\C#\StocksApp\StocksApp\WpfUiCore\obj\Debug\netcoreapp3.1\WpfUiCore.genruntimeconfig.cache
+C:\Users\dashwort\OneDrive - Agilent Technologies\CodingProjects\C#\StocksApp\StocksApp\WpfUiCore\obj\Debug\netcoreapp3.1\Views\StockListView.g.cs
+C:\Users\dashwort\OneDrive - Agilent Technologies\CodingProjects\C#\StocksApp\StocksApp\WpfUiCore\obj\Debug\netcoreapp3.1\Views\StockListView.baml
+C:\Users\dashwort\OneDrive - Agilent Technologies\CodingProjects\C#\StocksApp\StocksApp\WpfUiCore\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\dashwort\OneDrive - Agilent Technologies\CodingProjects\C#\StocksApp\StocksApp\WpfUiCore\bin\Debug\netcoreapp3.1\Stocks.dll
+C:\Users\dashwort\OneDrive - Agilent Technologies\CodingProjects\C#\StocksApp\StocksApp\WpfUiCore\bin\Debug\netcoreapp3.1\Stocks.pdb

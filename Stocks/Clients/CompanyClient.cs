@@ -32,11 +32,13 @@ namespace Stocks
             this.client = webClient;
         }
 
-        public async Task<List<Result>> Search(string[] stocks)
+        public async Task<List<Company>> Search(string[] stocks)
         {
             if (!StockManager.Approved(stocks.Length)) throw new ApplicationException("API Limit Reached");
 
-            List<Task<Result>> globalQuotes = new List<Task<Result>>();
+            Console.WriteLine($"Running search for {stocks.Length} Companies");
+
+            List<Task<Company>> globalQuotes = new List<Task<Company>>();
 
             foreach (var stock in stocks)
             {
@@ -48,7 +50,7 @@ namespace Stocks
             return results;
         }
 
-        public async Task<Result> GetCompany(string symbol)
+        public async Task<Company> GetCompany(string symbol)
         {
             var watch = Stopwatch.StartNew();
 
@@ -64,7 +66,7 @@ namespace Stocks
                 var body = await response.Content.ReadAsStringAsync();
 
                 watch.Stop();
-                var company = JsonConvert.DeserializeObject<Result>(body);
+                var company = JsonConvert.DeserializeObject<Company>(body);
 
                 StockManager.LogRequest(1);
                 return company;

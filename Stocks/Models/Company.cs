@@ -26,7 +26,7 @@ namespace Stocks.Models
         public string Logo { get; set; }
 
         [JsonPropertyName("marketCapitalization")]
-        public int MarketCapitalization { get; set; }
+        public long MarketCapitalization { get; set; }
 
         [JsonPropertyName("name")]
         public string Name { get; set; }
@@ -42,6 +42,9 @@ namespace Stocks.Models
 
         [JsonPropertyName("weburl")]
         public string Weburl { get; set; }
+
+        public Quote Quote { get; set; } = new Quote();
+
     }
 
 }

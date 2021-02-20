@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "+85N06ucGkcymkDD1+FHZgh6c6S3Hjx+hjMhM1gbnkqmAS+eRkVL4VyxCPSi6k14q6VESwJ9OZoR3PIylAhpzQ==",
+  "dgSpecHash": "LGk7msFvNCj+f9RTe3wxSIEhvYnriY38XgjwIxZbGKpAT129g813iJHwEW3J/AHSzrmkvdHEM5TKup0Kx31ajA==",
   "success": true,
   "projectFilePath": "C:\\Users\\dashwort\\OneDrive - Agilent Technologies\\CodingProjects\\C#\\StocksApp\\StocksApp\\WpfUiCore\\WpfUiCore.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dashwort\\.nuget\\packages\\caliburn.micro\\3.2.0\\caliburn.micro.3.2.0.nupkg.sha512",
-    "C:\\Users\\dashwort\\.nuget\\packages\\caliburn.micro.core\\3.2.0\\caliburn.micro.core.3.2.0.nupkg.sha512"
+    "C:\\Users\\dashwort\\.nuget\\packages\\caliburn.micro.core\\3.2.0\\caliburn.micro.core.3.2.0.nupkg.sha512",
+    "C:\\Users\\dashwort\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
   ],
   "logs": [
     {

@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfUiCore.Views"
         mc:Ignorable="d"
-        Title="ShellView" Height="450" Width="800" Background="Blue">
+        Title="ShellView" Height="750" Width="1200" 
+        WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow" 
+        BorderBrush="#FF3F3F46" OpacityMask="Black" ResizeMode="NoResize"
+        Visibility="Visible" Background="#36507e">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <ContentControl 
+            Grid.Row="1" 
+            Grid.Column="1"
+            Grid.ColumnSpan="1"
+            x:Name="ActiveItem"
+            Background="Green" 
+            />
     </Grid>
 </Window>

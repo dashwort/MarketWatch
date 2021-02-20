@@ -38,6 +38,8 @@ namespace Stocks
         {
             if (!StockManager.Approved(stocks.Length)) throw new ApplicationException("API Limit Reached");
 
+            Console.WriteLine($"Running search for {stocks.Length} Quotes");
+
             List<Task<Quote>> globalQuotes = new List<Task<Quote>>();
 
             foreach (var stock in stocks)

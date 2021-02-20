@@ -38,6 +38,14 @@ namespace Stocks.Models
             }
         }
 
- 
+        public String PreviousClose
+        {
+            get
+            {
+                return $"Closing Price {this.Pc}";
+            }
+        }
+
+
     }
 }

@@ -24,12 +24,11 @@ namespace StocksApp
 
             var stonks = new String[] 
             { 
-                "TSLA","IBM","AAPL","A","TLRY", "TSLA", "IBM", "BTC"
+                "TSLA","IBM","AAPL","A","TLRY"
             };
 
             _manager = new StockManager(stonks);
             _manager.searchResultClient.OnSearchComplete += SearchComplete;
-
 
             Task.Run(() => _manager.searchResultClient.Search("tesla"));
             Task.Run(() => _manager.searchResultClient.Search("AAPL"));
@@ -37,32 +36,8 @@ namespace StocksApp
             Task.Run(() => _manager.searchResultClient.Search("ibm"));
             Task.Run(() => _manager.searchResultClient.Search("btc"));
 
-            for (int i = 0; i < 15; i++)
-            {
-                try
-                {
-                    var quotes = await _manager.quoteClient.Search(_manager.Stocks);
-                    Console.WriteLine($"Quote Search {quotes.Count}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
-                    Console.WriteLine($"Sleeping thread for {(int)_manager._requestTimer.TimeLeft} secs");
-                    Thread.Sleep((int)_manager._requestTimer.TimeLeft + 2000);
-                }
-
-                try
-                {
-                    var companies = await _manager.companyClient.Search(_manager.Stocks);
-                    Console.WriteLine($"Company Search {companies.Count}");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
-                    Console.WriteLine($"Sleeping thread for {(int)_manager._requestTimer.TimeLeft} secs");
-                    Thread.Sleep((int)_manager._requestTimer.TimeLeft + 2000);
-                }
-            }
+            var quotes = await _manager.quoteClient.Search(_manager.Stocks);
+            var companies = await _manager.companyClient.Search(_manager.Stocks);
 
         }
 

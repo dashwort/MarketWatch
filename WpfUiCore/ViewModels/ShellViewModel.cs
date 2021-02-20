@@ -21,7 +21,9 @@ namespace WpfUiCore.ViewModels
         private DisplayContainer _secondary;
         private DisplayContainer _tertiary;
         private string _title;
-        
+
+        public string ToolTipText { get; set; } = "Tool Tip Display";
+
         public List<DisplayContainer> AllViews
         {
             get { return _views; }
@@ -94,6 +96,8 @@ namespace WpfUiCore.ViewModels
         public ShellViewModel()
         {
             UpdateVersionNumber();
+            var view = new StockListViewModel();
+            ActivateItem(view);
         }
 
    

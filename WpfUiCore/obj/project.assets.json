@@ -26,6 +26,28 @@
         "runtime": {
           "lib/net45/Caliburn.Micro.dll": {}
         }
+      },
+      "Newtonsoft.Json/12.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Stocks/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "compile": {
+          "bin/placeholder/Stocks.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Stocks.dll": {}
+        }
       }
     }
   },
@@ -113,11 +135,48 @@
         "lib/sl5/Caliburn.Micro.XML",
         "lib/sl5/Caliburn.Micro.dll"
       ]
+    },
+    "Newtonsoft.Json/12.0.3": {
+      "sha512": "6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
+      "type": "package",
+      "path": "newtonsoft.json/12.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.12.0.3.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
+      ]
+    },
+    "Stocks/1.0.0": {
+      "type": "project",
+      "path": "../Stocks/Stocks.csproj",
+      "msbuildProject": "../Stocks/Stocks.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "Caliburn.Micro >= 3.2.0"
+      "Caliburn.Micro >= 3.2.0",
+      "Stocks >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -150,7 +209,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\dashwort\\OneDrive - Agilent Technologies\\CodingProjects\\C#\\StocksApp\\StocksApp\\Stocks\\Stocks.csproj": {
+              "projectPath": "C:\\Users\\dashwort\\OneDrive - Agilent Technologies\\CodingProjects\\C#\\StocksApp\\StocksApp\\Stocks\\Stocks.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
