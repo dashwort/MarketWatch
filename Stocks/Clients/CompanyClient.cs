@@ -15,6 +15,7 @@ namespace Stocks
         public string key;
         public HttpClient client;
         public EventHandler OnSearchComplete;
+        public EventHandler OnSingleSearchComplete;
 
         public CompanyClient(string apikey)
         {
@@ -36,7 +37,7 @@ namespace Stocks
         {
             if (!StockManager.Approved(stocks.Length)) throw new ApplicationException("API Limit Reached");
 
-            Console.WriteLine($"Running search for {stocks.Length} Companies");
+            Trace.WriteLine($"Running search for {stocks.Length} Companies");
 
             List<Task<Company>> globalQuotes = new List<Task<Company>>();
 
@@ -50,7 +51,7 @@ namespace Stocks
             return results;
         }
 
-        public async Task<Company> GetCompany(string symbol)
+        public async Task<Company> GetCompany(string symbol, bool raiseEventOnCompletion = false)
         {
             var watch = Stopwatch.StartNew();
 
@@ -67,6 +68,9 @@ namespace Stocks
 
                 watch.Stop();
                 var company = JsonConvert.DeserializeObject<Company>(body);
+
+                if (raiseEventOnCompletion)
+                    OnSingleSearchComplete?.Invoke(company, EventArgs.Empty);
 
                 StockManager.LogRequest(1);
                 return company;

@@ -19,14 +19,25 @@ namespace WpfUiCore.ViewModels
             _statusTimer.Elapsed += TimerElapsed;
             _statusTimer.Start();
 
-            Manager = new StockManager(stonks);
             OnViewModelReady += OnStart;
-            Manager.searchResultClient.OnSearchComplete += SearchComplete;
-            Manager.quoteClient.OnSearchComplete += QuoteSearchComplete;
-            Manager.companyClient.OnSearchComplete += CompanySearchComplete;
+            this.Manager = Bootstrapper.Container.Manager;
 
-            //Task.Run(() => _manager.searchResultClient.Search("tesla"));
+            Manager.searchResultClient.OnSearchComplete += SearchComplete;
+            Manager.companyClient.OnSearchComplete += CompanySearchComplete;
+            Manager.companyClient.OnSingleSearchComplete += SingleSearchCmplete;
+
             OnViewModelReady?.Invoke(this,EventArgs.Empty);
+        }
+
+        async void SingleSearchCmplete(object sender, EventArgs e)
+        {
+            var company = sender as Company;
+
+            if(company != null)
+            {
+                company.Quote = await Manager.quoteClient.GetQuote(company.Ticker);
+                this.Stocks.Add(company);
+            }
         }
 
         BindableCollection<Company> _stocks = new BindableCollection<Company>();
@@ -37,7 +48,6 @@ namespace WpfUiCore.ViewModels
         StockManager _manager;
 
         EventHandler OnViewModelReady;
-        string[] stonks = new String[] { "TSLA","IBM","AAPL","A","TLRY", "TSLA", "IBM" };
 
         public BindableCollection<Company> Stocks
         {
@@ -82,60 +92,40 @@ namespace WpfUiCore.ViewModels
         #region EventHandlers
         void OnStart(object sender, EventArgs e)
         {
-            Console.WriteLine("Running startup tasks");
+            Trace.WriteLine("Running startup tasks");
             Task.Run(() => Manager.companyClient.Search(_manager.Stocks));
         }
 
         async void TimerElapsed(object sender, ElapsedEventArgs e)
         {
             // TODO pull status for review here
-            await Task.Run(() => Console.WriteLine("timer elapsed"));
-            Console.WriteLine();
+            await Task.Run(() => Trace.WriteLine("timer elapsed"));
         }
 
         async void SearchComplete(object sender, EventArgs e)
         {
-            await Task.Run(() => Console.WriteLine("timer elapsed"));
+            await Task.Run(() => Trace.WriteLine("timer elapsed"));
         }
 
         async void CompanySearchComplete(object sender, EventArgs e)
         {
-            Console.WriteLine("Company search complete");
-            this.Stocks.AddRange(sender as List<Company>);
+            var updatedStocks = new List<Company>();
+            var tempStocks = sender as List<Company>;
 
             var quotes = await Manager.quoteClient.Search(_manager.Stocks);
 
-            foreach (var stock in this.Stocks)
+            foreach (var stock in tempStocks)
             {
                 var quote = quotes.Where(x => x.Symbol == stock.Ticker).ToList();
 
                 if (quote.Count == 1)
+                {
                     stock.Quote = quote[0];
+                    updatedStocks.Add(stock);
+                }
             }
-        }
 
-        async void QuoteSearchComplete(object sender, EventArgs e)
-        {
-            //Console.WriteLine("Quote Search Complete");
-            //var quotes = sender as List<Quote>;
-            //List<Company> updatedList = new List<Company>(); 
-
-            //foreach (var stock in Stocks)
-            //{
-            //    foreach (var quote in quotes)
-            //    {
-            //        if(stock.Ticker == quote.Symbol)
-            //        {
-            //            stock.Quote = quote;
-            //            updatedList.Add(stock);
-            //        }
-            //    }
-            //}
-
-            //if(updatedList.Count == this.Stocks.Count)
-            //{
-            //    this.Stocks.AddRange(updatedList);
-            //}
+            this.Stocks.AddRange(updatedStocks);
         }
 
         #endregion

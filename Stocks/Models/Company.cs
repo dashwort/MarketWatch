@@ -43,7 +43,7 @@ namespace Stocks.Models
         [JsonPropertyName("weburl")]
         public string Weburl { get; set; }
 
-        public Quote Quote { get; set; } = new Quote();
+        public Quote Quote { get; set; }
 
     }
 

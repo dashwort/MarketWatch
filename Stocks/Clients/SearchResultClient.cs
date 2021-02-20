@@ -37,7 +37,7 @@ namespace Stocks
             if (!StockManager.Approved(1)) throw new ApplicationException("API Limit Reached");
 
             var watch = Stopwatch.StartNew();
-            Console.WriteLine($"Running search for '{searchTerm}'");
+            Trace.WriteLine($"Running search for '{searchTerm}'");
 
             var request = new HttpRequestMessage
             {

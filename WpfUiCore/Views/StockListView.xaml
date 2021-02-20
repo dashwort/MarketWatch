@@ -10,16 +10,13 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="45"/>
+            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <Grid.Resources>
@@ -51,7 +48,7 @@
         </Grid.Resources>
 
         <ListView Grid.Column="1" 
-                  Grid.Row="4" Grid.ColumnSpan="1" 
+                  Grid.Row="2" Grid.ColumnSpan="1" 
                   ItemsSource="{Binding Path=Stocks}"
                   AlternationCount="2"
                   Background="#f1f7fa"

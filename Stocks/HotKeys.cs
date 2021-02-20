@@ -65,7 +65,7 @@ namespace Stocks
 
             //if (!RegisterHotKey(helper.Handle, HOTKEY_ID, MOD_CTRL, VK_F10))
             //{
-            //    Console.WriteLine("Warning unable to register hotkey");
+            //    Trace.WriteLine("Warning unable to register hotkey");
             //}
         }
 
@@ -73,7 +73,7 @@ namespace Stocks
         {
             //var helper = new WindowInteropHelper(Application.Current.MainWindow);
             //UnregisterHotKey(helper.Handle, HOTKEY_ID);
-            //Console.WriteLine("Unregistering hotkeys");
+            //Trace.WriteLine("Unregistering hotkeys");
         }
     }
 }

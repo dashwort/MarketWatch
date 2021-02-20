@@ -1,0 +1,140 @@
+﻿<UserControl x:Class="WpfUiCore.Views.SearchResultView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfUiCore.Views" mc:Ignorable="d"
+             xmlns:cal="http://www.caliburnproject.org"
+             d:DesignHeight="700" d:DesignWidth="300"
+             BorderBrush="#FF3F3F46" OpacityMask="Black"
+             Background="Orange">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="23"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <Grid.Resources>
+            <Style TargetType="ListViewItem">
+                <!-- Set tool tip to last fwd body -->
+                <Setter Property="ToolTip">
+                    <Setter.Value>
+                        <UniformGrid Columns="1">
+                            <!--<TextBlock Text="{Binding Quote.Pc}"/>-->
+                        </UniformGrid>
+                    </Setter.Value>
+                </Setter>
+                <!-- Set item colour based on index, alternates between two colours -->
+                <Style.Triggers>
+                    <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+                        <Setter Property="Background" Value="White" />
+                    </Trigger>
+                    <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                        <Setter Property="Background" Value="#f1f7fa" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="#f1f7fa" />
+                <Setter Property="Width" Value="80" />
+                <Setter Property="Margin" Value="10" />
+            </Style>
+        </Grid.Resources>
+
+        <Grid Grid.Row="1" 
+                    Grid.Column="1" 
+                    Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.63*"/>
+                <ColumnDefinition Width="0.27*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0"
+                        x:Name="SearchString"
+                        Grid.ColumnSpan="1"
+                        cal:Message.Attach="[Event PreviewKeyDown] = [Action SearchString_PreviewKeyDown($this, $eventArgs)]"
+                        >
+            </TextBox>
+            <ComboBox Grid.Column="1"
+                      ItemsSource="{Binding Path=SearchOptions}"
+                      SelectedValue="{Binding Path=SearchComboText}"
+                      IsEditable="True" IsReadOnly="True" Text="Symbol"
+                      >
+            </ComboBox>
+        </Grid>
+        
+
+        <ListView Grid.Column="1" 
+                  Grid.Row="2" Grid.ColumnSpan="1" 
+                  ItemsSource="{Binding Path=Results}"
+                  AlternationCount="2"
+                  Background="#f1f7fa"
+                  SelectedItem="{Binding Path=SelectedResult}"
+                  SelectionMode="Single"
+                  cal:Message.Attach="[Event MouseDoubleClick] = [Action ListView_MouseDoubleClick($this, $eventArgs)]"
+                  >
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="#CCCCCC" BorderThickness="1">
+                        <Grid>
+                            <!-- Column Definitions for Grid within list view-->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" ></ColumnDefinition>
+                                <ColumnDefinition Width="30" ></ColumnDefinition>
+                                <ColumnDefinition Width="40" ></ColumnDefinition>
+                                <ColumnDefinition Width="400" ></ColumnDefinition>
+                                <ColumnDefinition Width="30" ></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <!--ListViewItems contents here -->
+                            <Label Content="{Binding DisplaySymbol}" 
+                                   FontSize="14" Grid.Column="1" Grid.ColumnSpan="4" 
+                                   FontWeight="Bold" >
+                            </Label>
+                            <Label Content="{Binding Description}" 
+                                   Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4"
+                                   FontWeight="Light">
+                            </Label>
+
+                            <!-- Stack panel allows displaying of To, SR and DateTime -->
+                            <StackPanel Orientation="Horizontal" 
+                                        Grid.Row="2" Grid.Column="1" 
+                                        Grid.ColumnSpan="4" >
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type Label}">
+                                        <Setter Property="Padding" Value="0,2,2,0"/>
+                                        <Setter Property="Margin" Value="5,0,0,2"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Label 
+                                    Content="{Binding Symbol}" 
+                                    FontWeight="UltraLight">
+                                </Label>
+                                <Label 
+                                    Content="{Binding Type}" 
+                                    FontWeight="UltraLight">
+                                </Label>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+
+</UserControl>

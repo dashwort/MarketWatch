@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Stocks;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,7 @@ namespace WpfUiCore
 {
     public class Bootstrapper : BootstrapperBase
     {
+        public static Dependencies Container = new Dependencies();
 
         public Bootstrapper()
         {
@@ -20,5 +22,6 @@ namespace WpfUiCore
         {
             DisplayRootViewFor<ShellViewModel>();
         }
+
     }
 }

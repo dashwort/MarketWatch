@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -52,7 +53,7 @@ namespace Stocks
 
             if (SearchLimitReached)
             {
-                await Task.Run(() => Console.WriteLine(_requestTimer.TimeLeft));
+                await Task.Run(() => Trace.WriteLine(_requestTimer.TimeLeft));
             }
         }
 
@@ -83,7 +84,7 @@ namespace Stocks
 
         void Reset()
         {
-            Console.WriteLine($"Max requests in time period {_requestCount}");
+            Trace.WriteLine($"Max requests in time period {_requestCount}");
             _requestCount = 0;
         }
 

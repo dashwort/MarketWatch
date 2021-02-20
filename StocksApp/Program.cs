@@ -31,10 +31,6 @@ namespace StocksApp
             _manager.searchResultClient.OnSearchComplete += SearchComplete;
 
             Task.Run(() => _manager.searchResultClient.Search("tesla"));
-            Task.Run(() => _manager.searchResultClient.Search("AAPL"));
-            Task.Run(() => _manager.searchResultClient.Search("micro"));
-            Task.Run(() => _manager.searchResultClient.Search("ibm"));
-            Task.Run(() => _manager.searchResultClient.Search("btc"));
 
             var quotes = await _manager.quoteClient.Search(_manager.Stocks);
             var companies = await _manager.companyClient.Search(_manager.Stocks);
@@ -45,7 +41,7 @@ namespace StocksApp
         {
             var search = sender as SearchResult;
 
-            Console.WriteLine($"Search Complete with {search.Result.Count} results in {search.Latency}ms");
+            Trace.WriteLine($"Search Complete with {search.Result.Count} results in {search.Latency}ms");
         }
     }
 

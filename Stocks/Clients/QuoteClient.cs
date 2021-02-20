@@ -17,6 +17,7 @@ namespace Stocks
         public string key;
         public HttpClient client;
         public EventHandler OnSearchComplete;
+        public EventHandler OnSingleSearchComplete;
 
         public QuoteClient(string apikey)
         {
@@ -38,7 +39,7 @@ namespace Stocks
         {
             if (!StockManager.Approved(stocks.Length)) throw new ApplicationException("API Limit Reached");
 
-            Console.WriteLine($"Running search for {stocks.Length} Quotes");
+            Trace.WriteLine($"Running search for {stocks.Length} Quotes");
 
             List<Task<Quote>> globalQuotes = new List<Task<Quote>>();
 
@@ -52,7 +53,7 @@ namespace Stocks
             return results;
         }
 
-        public async Task<Quote> GetQuote(string symbol)
+        public async Task<Quote> GetQuote(string symbol, bool raiseEventOnCompletion = false)
         {
             var watch = Stopwatch.StartNew();
 
@@ -73,6 +74,10 @@ namespace Stocks
                 quote.Symbol = symbol;
 
                 StockManager.LogRequest(1);
+
+                if (raiseEventOnCompletion)
+                    OnSingleSearchComplete?.Invoke(quote, EventArgs.Empty);
+
                 return quote;
             }
         }

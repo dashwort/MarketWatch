@@ -26,8 +26,14 @@
             Grid.Row="1" 
             Grid.Column="1"
             Grid.ColumnSpan="1"
-            x:Name="ActiveItem"
+            x:Name="FirstSubViewModel"
             Background="Green" 
+         />
+
+        <ContentControl 
+            x:Name="SecondSubViewModel"
+            Grid.Row="1"
+            Grid.Column="2"
             />
     </Grid>
 </Window>

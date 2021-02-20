@@ -12,17 +12,23 @@ using WpfUiCore.Models;
 
 namespace WpfUiCore.ViewModels
 {
-    public class ShellViewModel : Conductor<object>
+    public class ShellViewModel : Conductor<Screen>.Collection.AllActive
     {
+        public ShellViewModel()
+        {
+            this.FirstSubViewModel = new StockListViewModel();
+            this.SecondSubViewModel = new SearchResultViewModel();
+        }
+
+        #region fields
         private List<DisplayContainer> _views;
         private WindowManager WindowManager = new WindowManager();
-
         private DisplayContainer _primary;
-        private DisplayContainer _secondary;
-        private DisplayContainer _tertiary;
-        private string _title;
+        #endregion
 
-        public string ToolTipText { get; set; } = "Tool Tip Display";
+        #region properties
+        public Screen FirstSubViewModel { get; private set; }
+        public Screen SecondSubViewModel { get; private set; }
 
         public List<DisplayContainer> AllViews
         {
@@ -39,42 +45,16 @@ namespace WpfUiCore.ViewModels
                 NotifyOfPropertyChange();
             }
         }
-        public DisplayContainer Secondary
-        {
-            get { return _secondary; }
-            set
-            {
-                _secondary = value;
-                NotifyOfPropertyChange();
-            }
-        }
-        public DisplayContainer Tertiary
-        {
-            get { return _tertiary; }
-            set
-            {
-                _tertiary = value;
-                NotifyOfPropertyChange();
-            }
-        }
+        #endregion
 
-        public string Title
-        {
-            get { return _title; }
-            set
-            {
-                _title = value;
-                NotifyOfPropertyChange();
-            }
-        }
-
+        #region ICommandArea
         public ICommand LeftClickCommand
         {
             get
             {
                 return new DelegateCommand
                 {
-                    CommandAction = () => Console.WriteLine("LeftClickCommand"),
+                    CommandAction = () => Trace.WriteLine("LeftClickCommand"),
                     CanExecuteFunc = () => Application.Current.MainWindow != null
                 };
             }
@@ -91,35 +71,18 @@ namespace WpfUiCore.ViewModels
                 };
             }
         }
+        #endregion
 
-  
-        public ShellViewModel()
-        {
-            UpdateVersionNumber();
-            var view = new StockListViewModel();
-            ActivateItem(view);
-        }
-
-   
         protected override void OnViewReady(object view)
         {
             base.OnViewReady(view);
         }
  
-        private void UpdateVersionNumber()
-        {
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-            Title = $"Outlook Clipboard v.{versionInfo.FileVersion}";
-        }
-
         void DisplayViews()
         {
             var defaultView = new DisplayContainer();
 
             Primary = defaultView;
-            Secondary = defaultView;
-            Tertiary = defaultView;
 
             foreach (var View in AllViews)
             {
@@ -127,12 +90,6 @@ namespace WpfUiCore.ViewModels
                 {
                     case 1:
                         Primary = View;
-                        break;
-                    case 2:
-                        Secondary = View;
-                        break;
-                    case 3:
-                        Tertiary = View;
                         break;
                     default:
                         Primary = View;

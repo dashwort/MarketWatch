@@ -8,13 +8,13 @@ C:\Users\dashwort\OneDrive - Agilent Technologies\CodingProjects\C#\StocksApp\St
 WpfUiCore
 none
 false
-TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
+TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
 C:\Users\dashwort\OneDrive - Agilent Technologies\CodingProjects\C#\StocksApp\StocksApp\WpfUiCore\App.xaml
-3987795857
+4919431537
 
-111212783549
+131699144353
 1981594990230
-MainWindow.xaml;Views\ShellView.xaml;Views\StockListView.xaml;
+MainWindow.xaml;Views\SearchResultView.xaml;Views\ShellView.xaml;Views\StockListView.xaml;
 
 False
 
