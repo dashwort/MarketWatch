@@ -1,6 +1,4 @@
 ﻿using Caliburn.Micro;
-using Stocks;
-using Stocks.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
+using ThreeFourteen.Finnhub.Client;
+using ThreeFourteen.Finnhub.Client.Model;
 
 namespace WpfUiCore.ViewModels
 {
@@ -15,41 +16,27 @@ namespace WpfUiCore.ViewModels
     {
         public StockListViewModel()
         {
-            _statusTimer = new TimerPlus(5000) { AutoReset = true };
+            _statusTimer = new TimerPlus(200) { AutoReset = true };
             _statusTimer.Elapsed += TimerElapsed;
             _statusTimer.Start();
 
             OnViewModelReady += OnStart;
-            this.Manager = Bootstrapper.Container.Manager;
-
-            Manager.searchResultClient.OnSearchComplete += SearchComplete;
-            Manager.companyClient.OnSearchComplete += CompanySearchComplete;
-            Manager.companyClient.OnSingleSearchComplete += SingleSearchCmplete;
-
+            Bootstrapper.Client.Stock.OnCompaniesSearchComplete += Company2SearchComplete;
+            Bootstrapper.Client.Stock.OnSingleCompanySearchComplete += SingleSearchComplete;
             OnViewModelReady?.Invoke(this,EventArgs.Empty);
         }
 
-        async void SingleSearchCmplete(object sender, EventArgs e)
-        {
-            var company = sender as Company;
 
-            if(company != null)
-            {
-                company.Quote = await Manager.quoteClient.GetQuote(company.Ticker);
-                this.Stocks.Add(company);
-            }
-        }
 
-        BindableCollection<Company> _stocks = new BindableCollection<Company>();
+        BindableCollection<Company2> _stocks = new BindableCollection<Company2>();
         BindableCollection<Quote> _quotes = new BindableCollection<Quote>();
 
-        Company _selectedStock = new Company();
+        Company2 _selectedStock = new Company2();
         TimerPlus _statusTimer;
-        StockManager _manager;
 
         EventHandler OnViewModelReady;
 
-        public BindableCollection<Company> Stocks
+        public BindableCollection<Company2> Stocks
         {
             get { return _stocks; }
             set 
@@ -69,7 +56,7 @@ namespace WpfUiCore.ViewModels
             }
         }
 
-        public Company SelectedStock
+        public Company2 SelectedStock
         {
             get { return _selectedStock; }
             set
@@ -79,44 +66,47 @@ namespace WpfUiCore.ViewModels
             }
         }
 
-        public StockManager Manager
+        private string _status;
+
+        public string Status
         {
-            get { return _manager; }
-            set
-            {
-                _manager = value;
-                NotifyOfPropertyChange();
-            }
+            get { return _status; }
+            set { _status = value; }
         }
+
 
         #region EventHandlers
         void OnStart(object sender, EventArgs e)
         {
             Trace.WriteLine("Running startup tasks");
-            Task.Run(() => Manager.companyClient.Search(_manager.Stocks));
+            Task.Run(() => Bootstrapper.Client.Stock.SearchCompanies(Bootstrapper.Client.Symbols, true));
         }
 
-        async void TimerElapsed(object sender, ElapsedEventArgs e)
+        void TimerElapsed(object sender, ElapsedEventArgs e)
         {
-            // TODO pull status for review here
-            await Task.Run(() => Trace.WriteLine("timer elapsed"));
+            UpdateStatus();
         }
 
-        async void SearchComplete(object sender, EventArgs e)
+        void UpdateStatus()
         {
-            await Task.Run(() => Trace.WriteLine("timer elapsed"));
+            //
         }
 
-        async void CompanySearchComplete(object sender, EventArgs e)
+        void SearchComplete(object sender, EventArgs e)
         {
-            var updatedStocks = new List<Company>();
-            var tempStocks = sender as List<Company>;
+            //
+        }
 
-            var quotes = await Manager.quoteClient.Search(_manager.Stocks);
+        async void Company2SearchComplete(object sender, EventArgs e)
+        {
+            var updatedStocks = new List<Company2>();
+            var tempStocks = sender as Company2[];
+
+            var quotes = (await Bootstrapper.Client.Stock.SearchQuotes(Bootstrapper.Client.Symbols)).ToList();
 
             foreach (var stock in tempStocks)
             {
-                var quote = quotes.Where(x => x.Symbol == stock.Ticker).ToList();
+                List<Quote> quote = quotes.Where(x => x.Symbol == stock.Ticker).ToList();
 
                 if (quote.Count == 1)
                 {
@@ -126,6 +116,28 @@ namespace WpfUiCore.ViewModels
             }
 
             this.Stocks.AddRange(updatedStocks);
+        }
+
+        async void SingleSearchComplete(object sender, EventArgs e)
+        {
+            try
+            {
+                var Company2 = sender as Company2;
+
+                if (Company2 != null)
+                {
+                    Company2.Quote = await Bootstrapper.Client.Stock.GetQuote(Company2.Ticker);
+                    this.Stocks.Add(Company2);
+                }
+            }
+            catch (System.Net.Http.HttpRequestException ex)
+            {
+                MessageBox.Show("You need a premium API key for this feature, unable to process request.", "Permission Exception", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error whilst searching", MessageBoxButton.OK);
+            }
         }
 
         #endregion

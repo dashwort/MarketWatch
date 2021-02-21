@@ -2,20 +2,58 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="icons\add.png" />
+    <None Remove="icons\app_icon.ico" />
+    <None Remove="icons\config.png" />
+    <None Remove="icons\copy.png" />
+    <None Remove="icons\copy_all.png" />
+    <None Remove="icons\email_icon.png" />
+    <None Remove="icons\Install_Loading.gif" />
+    <None Remove="icons\minimise.png" />
+    <None Remove="icons\open.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="3.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="icons\" />
+    <ProjectReference Include="..\Finnub_client\src\ThreeFourteen.Finnhub.Client\ThreeFourteen.Finnhub.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Stocks\Stocks.csproj" />
+    <Resource Include="icons\add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\app_icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\config.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\copy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\copy_all.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\email_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\Install_Loading.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\minimise.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icons\open.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
 C:\Users\dashwort\OneDrive - Agilent Technologies\CodingProjects\C#\StocksApp\StocksApp\WpfUiCore\App.xaml
-4919431537
+5929022056
 
-131699144353
-1981594990230
-MainWindow.xaml;Views\SearchResultView.xaml;Views\ShellView.xaml;Views\StockListView.xaml;
+16-883170516
+199696019556
+MainWindow.xaml;Views\CompanyDetailsView.xaml;Views\SearchResultView.xaml;Views\ShellView.xaml;Views\StockListView.xaml;
 
 False
 

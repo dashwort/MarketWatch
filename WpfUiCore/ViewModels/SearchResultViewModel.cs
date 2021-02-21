@@ -1,14 +1,11 @@
 ﻿using Caliburn.Micro;
-using Stocks;
-using Stocks.Models;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ThreeFourteen.Finnhub.Client.Model;
 
 namespace WpfUiCore.ViewModels
 {
@@ -16,27 +13,11 @@ namespace WpfUiCore.ViewModels
     {
         public SearchResultViewModel()
         {
-            this.Manager = Bootstrapper.Container.Manager;
-            this.Manager.searchResultClient.OnSearchComplete += SearchComplete;
-        }
-
-        void SearchComplete(object sender, EventArgs e)
-        {
-            this.SearchResult = sender as SearchResult;
-
-            if(this.SearchResult != null)
-            {
-                if (this.SearchResult.Result.Count > 0)
-                {
-                    Trace.WriteLine($"Search complete with {this.SearchResult.Result.Count} results");
-                    this.Results.AddRange(SearchResult.Result);
-                }
-            }
+            Bootstrapper.Client.Stock.OnSymbolSearchComplete += SearchComplete;
         }
 
         BindableCollection<Result> _results = new BindableCollection<Result>();
         SearchResult _searchResult = new SearchResult();
-        StockManager _manager;
         Result _result = new Result();
         string _searchString = string.Empty;
         string _searchComboText = string.Empty;
@@ -72,16 +53,6 @@ namespace WpfUiCore.ViewModels
             }
         }
 
-        public StockManager Manager
-        {
-            get { return _manager; }
-            set
-            {
-                _manager = value;
-                NotifyOfPropertyChange();
-            }
-        }
-
         public string SearchString
         {
             get { return _searchString; }
@@ -102,8 +73,6 @@ namespace WpfUiCore.ViewModels
             }
         }
 
-
-
         public string[] SearchOptions
         {
             get { return _searchOptions; }
@@ -121,19 +90,40 @@ namespace WpfUiCore.ViewModels
 
             this.SearchResult = new SearchResult();
             this.Results.Clear();
-            await Manager.searchResultClient.Search(SearchString);
+            await Bootstrapper.Client.Stock.SearchSymbols(this.SearchString);
         }
 
-        public bool CanRunSearch()
+        public async Task AddToPortfolio()
         {
-            return true;
+            try
+            {
+                if (SelectedResult != null && !string.IsNullOrEmpty(SelectedResult.Symbol))
+                {
+                    await Bootstrapper.Client.Stock.GetCompany2(this.SelectedResult.Symbol, true);
+                }
+            }
+            catch (System.Net.Http.HttpRequestException ex)
+            {
+                MessageBox.Show($"You need a premium API key for this feature, unable to process request. Error: {ex.Message}", "Permission Exception", MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error whilst searching", MessageBoxButton.OK);
+            }
         }
 
         public async void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if(SelectedResult != null && !string.IsNullOrEmpty(SelectedResult.Symbol))
+            try
             {
-                var res = await Manager.companyClient.GetCompany(SelectedResult.Symbol, true);
+                if (SelectedResult != null && !string.IsNullOrEmpty(SelectedResult.Symbol))
+                {
+                    await Bootstrapper.Client.Stock.GetCompany2(this.SelectedResult.Symbol, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error whilst searching", MessageBoxButton.OK);
             }
         }
 
@@ -141,9 +131,36 @@ namespace WpfUiCore.ViewModels
         {
             if (string.IsNullOrEmpty(SearchString)) return;
 
-            if(e.Key == Key.Enter)
+            try
             {
-                await RunSearch();
+                if (e.Key == Key.Enter)
+                {
+                    await RunSearch();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error whilst searching", MessageBoxButton.OK);
+            }
+        }
+
+        public void SearchString_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(SearchString))
+                this.Results.Clear();
+        }
+
+        void SearchComplete(object sender, EventArgs e)
+        {
+            this.SearchResult = sender as SearchResult;
+
+            if (this.SearchResult != null)
+            {
+                if (this.SearchResult.Result.Count > 0)
+                {
+                    Trace.WriteLine($"Search complete with {this.SearchResult.Result.Count} results");
+                    this.Results.AddRange(SearchResult.Result);
+                }
             }
         }
     }

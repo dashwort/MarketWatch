@@ -25,10 +25,11 @@
                 <Setter Property="ToolTip">
                     <Setter.Value>
                         <UniformGrid Columns="1">
-                            <TextBlock Text="{Binding Quote.Pc}"/>
+                            <TextBlock Text="{Binding Quote.PreviousClose}"/>
                         </UniformGrid>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 <!-- Set item colour based on index, alternates between two colours -->
                 <Style.Triggers>
                     <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
@@ -107,7 +108,7 @@
                                     FontWeight="UltraLight">
                                 </Label>
                                 <Label 
-                                    Content="{Binding Quote.Pc}" 
+                                    Content="{Binding Quote.PreviousClose}" 
                                     FontWeight="UltraLight">
                                 </Label>
                             </StackPanel>

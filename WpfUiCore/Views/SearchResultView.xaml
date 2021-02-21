@@ -28,10 +28,11 @@
                 <Setter Property="ToolTip">
                     <Setter.Value>
                         <UniformGrid Columns="1">
-                            <!--<TextBlock Text="{Binding Quote.Pc}"/>-->
+                            <TextBlock Text="{Binding Description}"/>
                         </UniformGrid>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 <!-- Set item colour based on index, alternates between two colours -->
                 <Style.Triggers>
                     <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
@@ -58,11 +59,13 @@
                 <ColumnDefinition Width="0.27*"/>
             </Grid.ColumnDefinitions>
 
+            <!-- Search Box and button Start -->
             <TextBox Grid.Column="0"
                         x:Name="SearchString"
                         Grid.ColumnSpan="1"
-                        cal:Message.Attach="[Event PreviewKeyDown] = [Action SearchString_PreviewKeyDown($this, $eventArgs)]"
-                        >
+                        cal:Message.Attach="[Event PreviewKeyDown] = [Action SearchString_PreviewKeyDown($this, $eventArgs)]; 
+                        [Event TextChanged] = [Action SearchString_TextChanged($this, $eventArgs)]"
+                     >
             </TextBox>
             <ComboBox Grid.Column="1"
                       ItemsSource="{Binding Path=SearchOptions}"
@@ -70,9 +73,10 @@
                       IsEditable="True" IsReadOnly="True" Text="Symbol"
                       >
             </ComboBox>
+            <!-- Search Box and button end -->
         </Grid>
         
-
+        <!-- ListView -->
         <ListView Grid.Column="1" 
                   Grid.Row="2" Grid.ColumnSpan="1" 
                   ItemsSource="{Binding Path=Results}"
@@ -81,6 +85,7 @@
                   SelectedItem="{Binding Path=SelectedResult}"
                   SelectionMode="Single"
                   cal:Message.Attach="[Event MouseDoubleClick] = [Action ListView_MouseDoubleClick($this, $eventArgs)]"
+                  VerticalContentAlignment="Center"
                   >
 
             <ListView.ItemTemplate>
@@ -89,52 +94,30 @@
                         <Grid>
                             <!-- Column Definitions for Grid within list view-->
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50" ></ColumnDefinition>
-                                <ColumnDefinition Width="30" ></ColumnDefinition>
-                                <ColumnDefinition Width="40" ></ColumnDefinition>
-                                <ColumnDefinition Width="400" ></ColumnDefinition>
-                                <ColumnDefinition Width="30" ></ColumnDefinition>
+                                <ColumnDefinition Width="auto" ></ColumnDefinition>
+                                <ColumnDefinition Width="auto" ></ColumnDefinition>
+                                <ColumnDefinition Width="auto" ></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="40"></RowDefinition>
                             </Grid.RowDefinitions>
 
                             <!--ListViewItems contents here -->
                             <Label Content="{Binding DisplaySymbol}" 
-                                   FontSize="14" Grid.Column="1" Grid.ColumnSpan="4" 
+                                   FontSize="14" Grid.Column="0" Grid.ColumnSpan="1" 
                                    FontWeight="Bold" >
                             </Label>
                             <Label Content="{Binding Description}" 
-                                   Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4"
-                                   FontWeight="Light">
+                                   Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1"
+                                   FontWeight="Light"
+                                   >
                             </Label>
-
-                            <!-- Stack panel allows displaying of To, SR and DateTime -->
-                            <StackPanel Orientation="Horizontal" 
-                                        Grid.Row="2" Grid.Column="1" 
-                                        Grid.ColumnSpan="4" >
-                                <StackPanel.Resources>
-                                    <Style TargetType="{x:Type Label}">
-                                        <Setter Property="Padding" Value="0,2,2,0"/>
-                                        <Setter Property="Margin" Value="5,0,0,2"/>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <Label 
-                                    Content="{Binding Symbol}" 
-                                    FontWeight="UltraLight">
-                                </Label>
-                                <Label 
-                                    Content="{Binding Type}" 
-                                    FontWeight="UltraLight">
-                                </Label>
-                            </StackPanel>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <!-- End Of List view -->
     </Grid>
 
 </UserControl>
