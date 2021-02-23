@@ -84,37 +84,7 @@ namespace ThreeFourteen.Finnhub.Client
                 
             return result;
         }
-
-        public async Task<SearchResult> SearchSymbolAsync(string searchTerm)
-        {
-            if (String.IsNullOrEmpty(searchTerm)) throw new ApplicationException("Search cannot be empty");
-
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("X-Finnhub-Token", "c0kq75n48v6und6rt5f0");
-
-            var watch = Stopwatch.StartNew();
-            Trace.WriteLine($"Running search for '{searchTerm}'");
-
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri("https://finnhub.io/api/v1/search?q=" + searchTerm),
-            };
-
-            using (var response = await client.SendAsync(request))
-            {
-                response.EnsureSuccessStatusCode();
-                var body = await response.Content.ReadAsStringAsync();
-
-                var search = JsonConvert.DeserializeObject<SearchResult>(body);
-                watch.Stop();
-                search.Latency = watch.ElapsedMilliseconds;
-
-                OnSymbolSearchComplete?.Invoke(search, EventArgs.Empty);
-                return search;
-            }
-        }
-
+        
         public Task<SearchResult> SearchSymbols(string symbol)
         {
             if (string.IsNullOrWhiteSpace(symbol)) throw new ArgumentException(nameof(symbol));

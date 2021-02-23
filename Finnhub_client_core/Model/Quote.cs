@@ -26,16 +26,10 @@ namespace Finnhub.ClientCore.Model
 
         public string PricePollFormatted 
         { 
+            // TODO dynamic polling using socket
             get 
             { 
-                if(this.Current == 0)
-                {
-                    return $"Previous Close: ${PreviousClose}";
-                }  
-                else 
-                {
                     return $"Price: ${Current}";
-                }
             } 
         }
 
