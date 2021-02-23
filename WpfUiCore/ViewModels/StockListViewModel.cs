@@ -1,4 +1,6 @@
 ﻿using Caliburn.Micro;
+using Finnhub.ClientCore;
+using Finnhub.ClientCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,8 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
-using ThreeFourteen.Finnhub.Client;
-using ThreeFourteen.Finnhub.Client.Model;
 
 namespace WpfUiCore.ViewModels
 {
@@ -76,10 +76,10 @@ namespace WpfUiCore.ViewModels
 
 
         #region EventHandlers
-        void OnStart(object sender, EventArgs e)
+        async void OnStart(object sender, EventArgs e)
         {
             Trace.WriteLine("Running startup tasks");
-            Task.Run(() => Bootstrapper.Client.Stock.SearchCompanies(Bootstrapper.Client.Symbols, true));
+            await Bootstrapper.Client.Stock.SearchCompanies(Bootstrapper.Client.Symbols, true);
         }
 
         void TimerElapsed(object sender, ElapsedEventArgs e)
@@ -100,21 +100,23 @@ namespace WpfUiCore.ViewModels
         async void Company2SearchComplete(object sender, EventArgs e)
         {
             var updatedStocks = new List<Company2>();
-            var tempStocks = sender as Company2[];
+            var tempCompanies = sender as Company2[];
 
             var quotes = (await Bootstrapper.Client.Stock.SearchQuotes(Bootstrapper.Client.Symbols)).ToList();
 
-            foreach (var stock in tempStocks)
+            foreach (var company in tempCompanies)
             {
-                List<Quote> quote = quotes.Where(x => x.Symbol == stock.Ticker).ToList();
-
-                if (quote.Count == 1)
+                foreach (var quote in quotes)
                 {
-                    stock.Quote = quote[0];
-                    updatedStocks.Add(stock);
+                    if (quote.Symbol == company.Ticker)
+                    {
+                        updatedStocks.Add(company);
+                        company.Quote = quote;
+                    }  
                 }
             }
 
+            Trace.WriteLine($"Search complete with {this.Quotes.Count} quotes and {tempCompanies.Length} companies");
             this.Stocks.AddRange(updatedStocks);
         }
 
@@ -122,7 +124,8 @@ namespace WpfUiCore.ViewModels
         {
             try
             {
-                var Company2 = sender as Company2;
+                var companyTask = sender as Task<Company2>;
+                var Company2 = await companyTask;
 
                 if (Company2 != null)
                 {

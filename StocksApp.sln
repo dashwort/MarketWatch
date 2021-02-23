@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfUiCore", "WpfUiCore\WpfUiCore.csproj", "{E354E1C9-760A-4A7B-A33D-4C1115F93FC0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreeFourteen.Finnhub.Client", "Finnub_client\src\ThreeFourteen.Finnhub.Client\ThreeFourteen.Finnhub.Client.csproj", "{6C5A19D4-05B9-461E-A709-5774487A46A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finnhub.ClientCore", "Finnhub_client_core\Finnhub.ClientCore.csproj", "{BB40BC5B-1961-4168-A88E-1A95E038CD86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{E354E1C9-760A-4A7B-A33D-4C1115F93FC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E354E1C9-760A-4A7B-A33D-4C1115F93FC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E354E1C9-760A-4A7B-A33D-4C1115F93FC0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C5A19D4-05B9-461E-A709-5774487A46A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C5A19D4-05B9-461E-A709-5774487A46A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C5A19D4-05B9-461E-A709-5774487A46A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C5A19D4-05B9-461E-A709-5774487A46A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB40BC5B-1961-4168-A88E-1A95E038CD86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB40BC5B-1961-4168-A88E-1A95E038CD86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB40BC5B-1961-4168-A88E-1A95E038CD86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB40BC5B-1961-4168-A88E-1A95E038CD86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

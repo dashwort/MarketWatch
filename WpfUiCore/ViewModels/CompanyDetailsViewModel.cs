@@ -1,4 +1,4 @@
-﻿using ThreeFourteen.Finnhub.Client.Model;
+﻿using Finnhub.ClientCore.Model;
 
 namespace WpfUiCore.ViewModels
 {

@@ -1,11 +1,11 @@
 ﻿using Caliburn.Micro;
+using Finnhub.ClientCore.Model;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ThreeFourteen.Finnhub.Client.Model;
 
 namespace WpfUiCore.ViewModels
 {
@@ -90,7 +90,7 @@ namespace WpfUiCore.ViewModels
 
             this.SearchResult = new SearchResult();
             this.Results.Clear();
-            await Bootstrapper.Client.Stock.SearchSymbols(this.SearchString);
+            await Bootstrapper.Client.Stock.SearchSymbolAsync(this.SearchString);
         }
 
         public async Task AddToPortfolio()
@@ -118,7 +118,7 @@ namespace WpfUiCore.ViewModels
             {
                 if (SelectedResult != null && !string.IsNullOrEmpty(SelectedResult.Symbol))
                 {
-                    await Bootstrapper.Client.Stock.GetCompany2(this.SelectedResult.Symbol, true);
+                    var res = await Bootstrapper.Client.Stock.GetCompany2(this.SelectedResult.Symbol, true);
                 }
             }
             catch (Exception ex)
@@ -150,18 +150,21 @@ namespace WpfUiCore.ViewModels
                 this.Results.Clear();
         }
 
-        void SearchComplete(object sender, EventArgs e)
+        async void SearchComplete(object sender, EventArgs e)
         {
-            this.SearchResult = sender as SearchResult;
+            await Task.Run(() => {
+                this.SearchResult = sender as SearchResult;
 
-            if (this.SearchResult != null)
-            {
-                if (this.SearchResult.Result.Count > 0)
+                if (this.SearchResult != null)
                 {
-                    Trace.WriteLine($"Search complete with {this.SearchResult.Result.Count} results");
-                    this.Results.AddRange(SearchResult.Result);
+                    if (this.SearchResult.Result.Count > 0)
+                    {
+                        Trace.WriteLine($"Search complete with {this.SearchResult.Result.Count} results");
+                        this.Results.AddRange(SearchResult.Result);
+                    }
                 }
-            }
+            });
+            
         }
     }
 }

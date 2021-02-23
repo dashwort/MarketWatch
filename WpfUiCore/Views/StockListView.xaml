@@ -25,7 +25,7 @@
                 <Setter Property="ToolTip">
                     <Setter.Value>
                         <UniformGrid Columns="1">
-                            <TextBlock Text="{Binding Quote.PreviousClose}"/>
+                            <TextBlock Text="{Binding Quote.PreviousCloseFormatted}"/>
                         </UniformGrid>
                     </Setter.Value>
                 </Setter>
@@ -75,7 +75,7 @@
                             </Grid.RowDefinitions>
 
                             <!--ListViewItems contents here -->
-                            <Image Source="../icons/email_icon.png" 
+                            <Image Source="{Binding CachedLogo}" 
                                    Grid.RowSpan="4" 
                                    VerticalAlignment="Center"
                                    Margin="5">
@@ -100,16 +100,13 @@
                                     </Style>
                                 </StackPanel.Resources>
                                 <Label 
-                                    Content="{Binding Ticker}" 
+                                    Content="{Binding Quote.PricePollFormatted}" 
                                     FontWeight="UltraLight">
                                 </Label>
                                 <Label 
-                                    Content="{Binding FinnhubIndustry}" 
-                                    FontWeight="UltraLight">
-                                </Label>
-                                <Label 
-                                    Content="{Binding Quote.PreviousClose}" 
-                                    FontWeight="UltraLight">
+                                    Content="{Binding Quote.PercentChangeFormatted}" 
+                                    FontWeight="UltraLight"
+                                    Foreground="{Binding Quote.ChangeIndicator}">
                                 </Label>
                             </StackPanel>
                         </Grid>

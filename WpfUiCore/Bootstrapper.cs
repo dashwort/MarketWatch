@@ -1,11 +1,11 @@
 ﻿using Caliburn.Micro;
+using Finnhub.ClientCore;
 using Stocks;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows;
-using ThreeFourteen.Finnhub.Client;
 using WpfUiCore.Models;
 using WpfUiCore.ViewModels;
 
